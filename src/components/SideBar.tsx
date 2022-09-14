@@ -1,16 +1,17 @@
+import { memo } from "react";
 import { Button } from "./Button";
 
 interface SideBarProps {
   genres: Array<{
     id: number;
-    name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
+    name: "action" | "comedy" | "documentary" | "drama" | "horror" | "family";
     title: string;
   }>;
   selectedGenreId: number;
   buttonClickCallback: (args: any) => void;
 }
 
-export function SideBar({
+function SideBarComponent({
   genres,
   selectedGenreId,
   buttonClickCallback
@@ -30,7 +31,13 @@ export function SideBar({
           />
         ))}
       </div>
-
     </nav>
   )
 }
+
+export const SideBar = memo(SideBarComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.selectedGenreId === nextProps.selectedGenreId &&
+    prevProps.genres.length === nextProps.genres.length
+  );
+});
